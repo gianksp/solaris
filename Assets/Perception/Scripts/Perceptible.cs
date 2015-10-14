@@ -7,7 +7,7 @@ public class Perceptible : MonoBehaviour {
 
 	[Header("Actionable")]
 	public int loadCycleTime		= 10;		//Cycle is 0,1 seconds
-	public int actionCycleTime		= 2;		//Cycle is 0,1 seconds
+	public int actionCycleTime		= 10;		//Cycle is 0,1 seconds
 	public bool  repeat 			= false;	//Repeat action after trigger once
 
 	private bool 	_gazedAt;
@@ -30,20 +30,24 @@ public class Perceptible : MonoBehaviour {
 		}
 
 		if (_timer >= 0) {
+
 			if (timer == Timer.Action) {
-				ExecuteAction();
+				Action();
+				if (repeat) {
+					_timer = actionCycleTime;
+					StartCoroutine(DecreaseTimer(Timer.Action));
+				}
+
 			} else if (timer == Timer.Load) {
+				Debug.Log ("Engaged "+Time.deltaTime);
 				_timer = actionCycleTime;
 				StartCoroutine(DecreaseTimer(Timer.Action));
 			}
 		}
 	}
 
-	void ExecuteAction() {
+	public virtual void Action() {
 		Debug.Log ("Action Executed "+Time.deltaTime);
-		if (repeat) {
-			_timer = actionCycleTime;
-			StartCoroutine(DecreaseTimer(Timer.Action));
-		}
+
 	}
 }

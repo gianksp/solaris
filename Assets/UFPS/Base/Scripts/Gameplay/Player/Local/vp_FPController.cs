@@ -19,7 +19,7 @@ using System.Collections.Generic;
 
 public class vp_FPController : vp_CharacterController
 {
-	
+
 	// general
 	protected Vector3 m_FixedPosition = Vector3.zero;		// exact position. updates at a fixed interval and is used for gameplay
 	protected Vector3 m_SmoothPosition = Vector3.zero;		// smooth position. updates as often as possible and is only used for the camera
@@ -44,6 +44,7 @@ public class vp_FPController : vp_CharacterController
 	protected GameObject m_Trigger = null;					// trigger gameobject for detection of incoming objects
 
 	// motor
+	public Transform head;
 	public float MotorAcceleration = 0.18f;
 	public float MotorDamping = 0.17f;
 	public float MotorBackwardsSpeed = 0.65f;
@@ -140,6 +141,14 @@ public class vp_FPController : vp_CharacterController
 			m_TriggerCollider.center = CharacterController.center;
 
 		}
+
+		//Track head?
+		GameObject refHead = GameObject.FindGameObjectWithTag ("Head");
+		if (refHead) {
+			head = refHead.transform;
+			Debug.Log ("Head found, start tracking");
+		}
+
 
 	}
 
@@ -261,6 +270,9 @@ public class vp_FPController : vp_CharacterController
 		// if on the ground, make movement speed dependent on ground slope
 		UpdateSlopeFactor();
 
+		Vector3 forward = head != null ? head.forward : Vector3.forward;
+		Vector3 right 	= head != null ? head.right : Vector3.right;
+
 		// update air speed modifier
 		// (at 1.0, this will completely prevent the controller from altering
 		// its trajectory while in the air, and will disable motor damping)
@@ -271,12 +283,12 @@ public class vp_FPController : vp_CharacterController
 			((Player.InputMoveVector.Get().y > 0) ? Player.InputMoveVector.Get().y : // if moving forward or sideways: use normal speed
 			(Player.InputMoveVector.Get().y * MotorBackwardsSpeed))		// if moving backwards: apply backwards-modifier
 			* (Transform.TransformDirection(
-			Vector3.forward *
+			forward *
 			(MotorAcceleration * 0.1f) *
 			m_MotorAirSpeedModifier) *
 			m_SlopeFactor);
 		m_MotorThrottle += Player.InputMoveVector.Get().x * (Transform.TransformDirection(
-			Vector3.right *
+			right *
 			(MotorAcceleration * 0.1f) *
 			m_MotorAirSpeedModifier) *
 			m_SlopeFactor);

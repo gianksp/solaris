@@ -86,7 +86,9 @@ public abstract class BaseVRDevice {
 
   public virtual RenderTexture CreateStereoScreen() {
     Debug.Log("Creating new default cardboard screen texture.");
-    return new RenderTexture(Screen.width, Screen.height, 16, RenderTextureFormat.RGB565);
+	var rt = new RenderTexture(Screen.width, Screen.height, 16, RenderTextureFormat.RGB565);
+	rt.antiAliasing = 2; // <-- This is the new line
+    return rt;
   }
 
   public virtual bool SetDefaultDeviceProfile(Uri uri) {

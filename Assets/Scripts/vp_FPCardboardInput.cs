@@ -20,10 +20,10 @@ public class vp_FPCardboardInput : vp_FPInput {
 		// to the input from both Ultimate FPS and from Unity, and might
 		// require some tweaking in order not to feel laggy
 		float deltaY = Input.gyro.userAcceleration.y;
-		if (deltaY <= -0.3f && deltaY >= -0.5f) {
-			vAccel = 20f;
+		if (deltaY <= -0.3f) {
+			vAccel = 22.5f;
 		} else if (vAccel > 0){
-			vAccel-= 0.25f;
+			vAccel-= 0.5f;
 		}
 		FPPlayer.InputMoveVector.Set (Vector2.up*vAccel);
 	}
@@ -39,10 +39,10 @@ public class vp_FPCardboardInput : vp_FPInput {
 	{
 
 		float deltaY = Input.gyro.userAcceleration.y;
-		if (deltaY <= -0.5f && deltaY >= -1.0f) {
+		if (deltaY <= -0.5f) {
 			rAccel = 20f;
 		} else if (rAccel > 0){
-			rAccel-= 0.25f;
+			rAccel-= 0.1f;
 		}
 		if (rAccel > 0)
 			FPPlayer.Run.TryStart();
@@ -70,7 +70,7 @@ public class vp_FPCardboardInput : vp_FPInput {
 		if (deltaY <= -1.0f) {
 			jAccel = 20f;
 		} else if (jAccel > 0){
-			jAccel-= 0.25f;
+			jAccel-= 0.1f;
 		}
 		if (jAccel > 0)
 			FPPlayer.Jump.TryStart();
@@ -81,7 +81,7 @@ public class vp_FPCardboardInput : vp_FPInput {
 
 	void OnGUI(){
 		
-		GUI.Label(new Rect(200, 200, 400, 30), Input.gyro.userAcceleration.ToString(),guiStyle);
+//		GUI.Label(new Rect(200, 200, 400, 30), Input.gyro.userAcceleration.ToString(),guiStyle);
 //		GUI.Label(new Rect(200, 200, 400, 30), Input.gyro.userAcceleration.ToString(),guiStyle);
 //		
 //		GUI.Label(new Rect(200, 350, 400, 30), "Walk "+vAccel.ToString(),guiStyle);

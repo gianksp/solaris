@@ -21,9 +21,9 @@ public class vp_FPCardboardInput : vp_FPInput {
 		// require some tweaking in order not to feel laggy
 		float deltaY = Input.gyro.userAcceleration.y;
 		if (deltaY <= -0.3f) {
-			vAccel = 22.5f;
+			vAccel = 25.0f;
 		} else if (vAccel > 0){
-			vAccel-= 0.5f;
+			vAccel-= 1f;
 		}
 		FPPlayer.InputMoveVector.Set (Vector2.up*vAccel);
 	}
@@ -38,16 +38,16 @@ public class vp_FPCardboardInput : vp_FPInput {
 	protected override void InputRun()
 	{
 
-		float deltaY = Input.gyro.userAcceleration.y;
-		if (deltaY <= -0.5f) {
-			rAccel = 20f;
-		} else if (rAccel > 0){
-			rAccel-= 0.1f;
-		}
-		if (rAccel > 0)
-			FPPlayer.Run.TryStart();
-		else
-			FPPlayer.Run.TryStop();
+//		float deltaY = Input.gyro.userAcceleration.y;
+//		if (deltaY <= -0.5f) {
+//			rAccel = 20f;
+//		} else if (rAccel > 0){
+//			rAccel-= 0.1f;
+//		}
+//		if (rAccel > 0)
+//			FPPlayer.Run.TryStart();
+//		else
+//			FPPlayer.Run.TryStop();
 		
 	}
 	
